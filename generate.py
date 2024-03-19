@@ -37,6 +37,6 @@ data["log10_tau_upper"] = log10_tau_measured + 0.1
 data.to_csv("data.csv", index=False)
 
 plt.errorbar(z, log10_tau_measured, fmt="o", yerr=0.1,  alpha=0.3)
-plt.show
+plt.show()
 
 
