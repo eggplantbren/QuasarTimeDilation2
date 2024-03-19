@@ -1,0 +1,68 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage[left=1.5cm, right=1.5cm, bottom=2cm, top=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{natbib}
+\newcommand{\given}{\,|\,}
+
+\title{Two-sided Exponential Distribution}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+%\abstract{}
+
+% Need this after the abstract
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt}
+
+
+Let the probability density be a mixture of two parts: a regular exponential
+distribution on the right hand side, and a reversed exponential distribution on
+the left hand side. Suppose it is centered at a median value $x=\mu$, and
+has a scale length of $\beta_l$ on the left and $\beta_r$ on the right.
+Therefore the probability density is given by
+\begin{align}
+p(x) &= \left\{
+    \begin{array}{lr}
+    \frac{1}{2\beta_l}\exp\left(\frac{x-\mu}{\beta_l} \right), & x < \mu \\
+    \frac{1}{2\beta_r}\exp\left(-\left[\frac{x-\mu}{\beta_r}\right]\right),
+                                & x \geq \mu \\
+    \end{array}
+    \right.
+\end{align}
+This distribution already has 50\% probability on
+each side, which is one of our requirements.
+We now need to find the formulas for setting $\beta_l$ and $\beta_r$ based on
+the 16\% and 84\% quantiles, which are given.
+
+For a standard Exponential(1) distribution, the inverse CDF is
+\begin{align}
+F^{-1}(u) &= -\log(1 - u),
+\end{align}
+and we are looking for the 68\% quantile of this distribution.
+This occurs at
+\begin{align}
+x &= -\log(1 - 0.68) \\
+  &\approx 1.1394.
+\end{align}
+Therefore, 68\% of the mass of the double exponential distribution is
+contained between $\mu-1.1394\beta_l$ and $\mu + 1.1394\beta_r$.
+If we are given the credible interval $[x_l, x_r]$ we can solve for the
+$\beta$s using
+\begin{align}
+\beta_l &= \frac{\mu - x_l}{1.1394} \\
+\beta_r &= \frac{x_r - \mu}{1.1394}.
+\end{align}
+
+
+
+\end{document}
+
