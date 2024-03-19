@@ -5,6 +5,8 @@
 
 class Data
 {
+    friend class MyModel;
+
     private:
         std::vector<double> z;
         std::vector<double> log10_tau_lower;

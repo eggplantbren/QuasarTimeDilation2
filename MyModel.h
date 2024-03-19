@@ -7,7 +7,8 @@
 class MyModel
 {
     private:
-
+        double C;
+        double n;
 
     public:
         // Constructor only gives size of params
