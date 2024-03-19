@@ -1,5 +1,6 @@
 #include "MyModel.h"
 #include "DNest4/code/DNest4.h"
+#include "Data.h"
 
 MyModel::MyModel()
 {
@@ -34,6 +35,16 @@ double MyModel::perturb(DNest4::RNG& rng)
 double MyModel::log_likelihood() const
 {
     double logL = 0.0;
+
+    const Data& data = Data::instance;
+    for(size_t i=0; i<data.z.size(); ++i)
+    {
+        // No intrinsic scatter yet
+        double mu = C + n*log10(1.0 + data.z[i]);
+
+//        logL += 
+    }
+
     return logL;
 }
 
