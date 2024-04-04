@@ -42,7 +42,12 @@ double MyModel::log_likelihood() const
         // No intrinsic scatter yet
         double mu = C + n*log10(1.0 + data.z[i]);
 
-//        logL += 
+        double beta_l = (data.log10_tau_mid[i] - data.log10_tau_lower[i])/1.1394;
+        double beta_r = (data.log10_tau_upper[i] - data.log10_tau_mid[i])/1.1394;
+        if(mu < data.log10_tau_mid[i])
+            logL += -log(2.0*beta_l) + (mu - data.log10_tau_mid[i])/beta_l;
+        else
+            logL += -log(2.0*beta_r) - (mu - data.log10_tau_mid[i])/beta_r;
     }
 
     return logL;
