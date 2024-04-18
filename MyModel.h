@@ -10,6 +10,10 @@ class MyModel
         double C;
         double n;
 
+        // Standard deviation of intrinsic scatter
+        double sigma;
+        std::vector<double> ns; // Intrinsic scatter per-object parameters
+
     public:
         // Constructor only gives size of params
         MyModel();
