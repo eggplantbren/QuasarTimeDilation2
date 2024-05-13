@@ -12,7 +12,7 @@ void MyModel::from_prior(DNest4::RNG& rng)
 {
     beta1 = -10.0 + 20.0*rng.rand();
     beta2 = -10.0 + 20.0*rng.rand();
-    C = -10.0 + 20.0*rng.rand();
+    C = -100.0 + 200.0*rng.rand();
     n = -1.0 + 5.0*rng.rand();
 
     sigma = rng.rand();
@@ -37,8 +37,8 @@ double MyModel::perturb(DNest4::RNG& rng)
     }
     else if(which == 2)
     {
-        C += 20.0*rng.randh();
-        DNest4::wrap(C, -10.0, 10.0);
+        C += 200.0*rng.randh();
+        DNest4::wrap(C, -100.0, 100.0);
     }
     else if(which == 3)
     {
@@ -91,11 +91,11 @@ double MyModel::log_likelihood() const
 
 void MyModel::print(std::ostream& out) const
 {
-    out << beta1 << " " << beta2 << " " << C << ' ' << n << ' ' << sigma;
+    out << C << ' ' << beta1 << ' ' << beta2 << ' ' << n << ' ' << sigma;
 }
 
 std::string MyModel::description() const
 {
-    return std::string("beta1 beta2 C n sigma");
+    return std::string("C beta1 beta2 n sigma");
 }
 
