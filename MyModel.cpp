@@ -12,7 +12,7 @@ void MyModel::from_prior(DNest4::RNG& rng)
 {
     beta1 = -10.0 + 20.0*rng.rand();
     beta2 = -10.0 + 20.0*rng.rand();
-    C = -100.0 + 200.0*rng.rand();
+    C = -10.0 + 20.0*rng.rand();
     n = -1.0 + 5.0*rng.rand();
 
     sigma = rng.rand();
@@ -37,8 +37,8 @@ double MyModel::perturb(DNest4::RNG& rng)
     }
     else if(which == 2)
     {
-        C += 200.0*rng.randh();
-        DNest4::wrap(C, -100.0, 100.0);
+        C += 20.0*rng.randh();
+        DNest4::wrap(C, -10.0, 10.0);
     }
     else if(which == 3)
     {
@@ -67,7 +67,8 @@ double MyModel::log_likelihood() const
     for(size_t i=0; i<data.z.size(); ++i)
     {
         // Prediction made by the regression surface
-        double mu = C + beta1*data.lambda[i] + beta2*data.l_bol[i]
+        double mu = C + beta1*(data.lambda[i] - data.mean_lambda)
+                        + beta2*(data.l_bol[i] - data.mean_l_bol)
                         + n*log10(1.0 + data.z[i]);
 
         // Add intrinsic scatter
