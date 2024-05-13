@@ -10,6 +10,8 @@ MyModel::MyModel()
 
 void MyModel::from_prior(DNest4::RNG& rng)
 {
+    beta1 = -10.0 + 20.0*rng.rand();
+    beta2 = -10.0 + 20.0*rng.rand();
     C = -10.0 + 20.0*rng.rand();
     n = -1.0 + 5.0*rng.rand();
 
@@ -21,18 +23,29 @@ void MyModel::from_prior(DNest4::RNG& rng)
 double MyModel::perturb(DNest4::RNG& rng)
 {
     double logH = 0.0;
-    int which = rng.rand_int(4);
+    int which = rng.rand_int(6);
+
     if(which == 0)
+    {
+        beta1 += 20.0*rng.randh();
+        DNest4::wrap(beta1, -10.0, 10.0);
+    }
+    else if(which == 1)
+    {
+        beta2 += 20.0*rng.randh();
+        DNest4::wrap(beta1, -10.0, 10.0);
+    }
+    else if(which == 2)
     {
         C += 20.0*rng.randh();
         DNest4::wrap(C, -10.0, 10.0);
     }
-    else if(which == 1)
+    else if(which == 3)
     {
         n += 5.0*rng.randh();
         DNest4::wrap(n, -1.0, 4.0);
     }
-    else if(which == 2)
+    else if(which == 4)
     {
         sigma += rng.randh();
         DNest4::wrap(sigma, 0.0, 1.0);
@@ -57,7 +70,7 @@ double MyModel::log_likelihood() const
         double mu = C + n*log10(1.0 + data.z[i]);
 
         // Add intrinsic scatter
-        mu += sigma*ns[i];
+        // mu += sigma*ns[i];
 
         // Gaussian likelihood for simulated data with symmetric errorbars
 //        double sigma = data.log10_tau_mid[i] - data.log10_tau_lower[i];
@@ -77,11 +90,11 @@ double MyModel::log_likelihood() const
 
 void MyModel::print(std::ostream& out) const
 {
-    out << C << ' ' << n << ' ' << sigma;
+    out << beta1 << " " << beta2 << " " << C << ' ' << n << ' ' << sigma;
 }
 
 std::string MyModel::description() const
 {
-    return std::string("C n sigma");
+    return std::string("beta1 beta2 C n sigma");
 }
 
