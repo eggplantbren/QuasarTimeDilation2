@@ -15,6 +15,10 @@ class Data
         std::vector<double> log10_tau_mid;
         std::vector<double> log10_tau_upper;
 
+        // Summaries of explanatory variables
+        double mean_lambda;
+        double mean_l_bol;
+
     public:
         Data(const char* filename);
 
