@@ -12,6 +12,8 @@ void MyModel::from_prior(DNest4::RNG& rng)
 {
     beta1 = -10.0 + 20.0*rng.rand();
     beta2 = -10.0 + 20.0*rng.rand();
+    beta12 = -1.0 + 2.0*rng.rand();
+
     C = -10.0 + 20.0*rng.rand();
     n = -1.0 + 5.0*rng.rand();
 
@@ -23,7 +25,7 @@ void MyModel::from_prior(DNest4::RNG& rng)
 double MyModel::perturb(DNest4::RNG& rng)
 {
     double logH = 0.0;
-    int which = rng.rand_int(6);
+    int which = rng.rand_int(7);
 
     if(which == 0)
     {
@@ -50,9 +52,14 @@ double MyModel::perturb(DNest4::RNG& rng)
         sigma += rng.randh();
         DNest4::wrap(sigma, 0.0, 1.0);
     }
-    else
+    else if(which == 5)
     {
         logH += DNest4::perturb_ns(ns, rng);
+    }
+    else
+    {
+        beta12 += 2.0*rng.randh();
+        DNest4::wrap(beta12, -1.0, 1.0);
     }
 
 
@@ -69,6 +76,7 @@ double MyModel::log_likelihood() const
         // Prediction made by the regression surface
         double mu = C + beta1*(data.lambda[i] - data.mean_lambda)
                         + beta2*(data.l_bol[i] - data.mean_l_bol)
+                        + beta12*(data.lambda[i] - data.mean_lambda)*(data.l_bol[i] - data.mean_l_bol)
                         + n*log10(1.0 + data.z[i]);
 
         // Add intrinsic scatter
@@ -92,11 +100,11 @@ double MyModel::log_likelihood() const
 
 void MyModel::print(std::ostream& out) const
 {
-    out << C << ' ' << beta1 << ' ' << beta2 << ' ' << n << ' ' << sigma;
+    out << C << ' ' << beta1 << ' ' << beta2 << ' ' << beta12 << ' ' << n << ' ' << sigma;
 }
 
 std::string MyModel::description() const
 {
-    return std::string("C beta1 beta2 n sigma");
+    return std::string("C beta1 beta2 beta12 n sigma");
 }
 
