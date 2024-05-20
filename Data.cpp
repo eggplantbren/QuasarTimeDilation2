@@ -14,8 +14,8 @@ Data::Data(const char* filename)
             && fin >> e && fin >> f)
     {
         z.push_back(a);
-        lambda.push_back(b);
-        l_bol.push_back(c);
+        l_bol.push_back(b);
+        lambda.push_back(c);
         log10_tau_lower.push_back(d);
         log10_tau_mid.push_back(e);
         log10_tau_upper.push_back(f);
