@@ -19,6 +19,6 @@ for i in range(data.shape[0]):
         tau_l = tau_o - data[tau_l_cols[j]][i]
         tau_r = tau_o + data[tau_u_cols[j]][i]
 
-        print(str(z) + " " + str(lbol) + " " + str(lr) + " "
+        print(str(z) + " " + str(lbol) + " " + str(np.log10(lr)) + " "
                 + str(tau_l) + " " + str(tau_o) + " " + str(tau_r))
 
