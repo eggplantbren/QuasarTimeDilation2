@@ -80,7 +80,7 @@ double MyModel::log_likelihood() const
                         + n*log10(1.0 + data.z[i]);
 
         // Add intrinsic scatter
-        mu += sigma*ns[i];
+        mu += sigma*ns[i/3];
 
         // Gaussian likelihood for simulated data with symmetric errorbars
 //        double sigma = data.log10_tau_mid[i] - data.log10_tau_lower[i];
