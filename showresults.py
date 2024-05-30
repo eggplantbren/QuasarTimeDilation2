@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import dnest4.classic as dn4
-dn4.postprocess()
+dn4.postprocess(rng_seed=0)
 
 posterior_sample = np.loadtxt("posterior_sample.txt")
 
