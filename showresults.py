@@ -5,6 +5,11 @@ dn4.postprocess(rng_seed=0)
 
 posterior_sample = np.loadtxt("posterior_sample.txt")
 
+# Set up fonts
+plt.rcParams["font.family"] = "serif"
+plt.rcParams["font.size"] = 14
+plt.rc("text", usetex=True)
+
 C = posterior_sample[:,0]
 beta1 = posterior_sample[:,1]
 beta2 = posterior_sample[:,2]
@@ -30,9 +35,12 @@ for i in range(len(C)):
 fmean = ftot/len(C)
 
 plt.imshow(fmean, aspect="auto", extent=[lamb.min(), lamb.max(), lbol.min(), lbol.max()],
-            cmap="jet", vmin=2.2, vmax=3.6)
-plt.plot(lamb_data, lbol_data, "ko", alpha=0.3)
+            cmap="viridis", vmin=2.2, vmax=3.6)
+plt.plot(lamb_data, lbol_data, "wo", markersize=7, alpha=0.3)
+plt.xlabel("$\\log_{10}(\\lambda/\\mathring{A})$")
+plt.ylabel("$\\log_{10}(L_{\\rm bol}/{\\rm (erg/s)})$")
 plt.colorbar()
+plt.savefig("surface.pdf", pad_inches=0.2, bbox_inches="tight")
 plt.show()
 
 
