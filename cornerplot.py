@@ -16,3 +16,9 @@ corner.corner(posterior_sample,
         plot_density=False, fontsize=14)
 plt.savefig("cornerplot.png", dpi=450)
 
+
+## For small cornerplot with only beta3 and n
+#corner.corner(posterior_sample[:, [6, 4]],
+#                labels=["$\\beta_3$", "$n$"],
+#                plot_density=False, plot_contours=False, fontsize=14)
+#plt.savefig("cornerplot2.png")
