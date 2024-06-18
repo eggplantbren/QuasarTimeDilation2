@@ -22,3 +22,13 @@ plt.savefig("cornerplot.png", dpi=450)
 #                labels=["$\\beta_3$", "$n$"],
 #                plot_density=False, plot_contours=False, fontsize=14)
 #plt.savefig("cornerplot2.png")
+
+
+## For posterior histogram of beta3 when n is fixed to 1
+#plt.hist(posterior_sample[:,-1], bins=20, alpha=0.5)
+#plt.xlabel("$\\beta_3$")
+#plt.ylabel("Number of samples")
+#plt.axvline(0.0, linestyle="--", color="r")
+#plt.savefig("beta3.pdf")
+
+
