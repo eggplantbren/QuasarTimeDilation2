@@ -37,7 +37,7 @@ fmean = ftot/len(C)
 plt.imshow(fmean, aspect="auto", extent=[lamb.min(), lamb.max(), lbol.min(), lbol.max()],
             cmap="viridis", vmin=2.2, vmax=3.6)
 plt.plot(lamb_data, lbol_data, "wo", markersize=7, alpha=0.3)
-plt.xlabel("$\\log_{10}(\\lambda/\\mathring{A})$")
+plt.xlabel("$\\log_{10}(\\lambda/\\textnormal{\\AA})$")
 plt.ylabel("$\\log_{10}(L_{\\rm bol}/{\\rm (erg/s)})$")
 plt.colorbar()
 plt.savefig("surface.pdf", pad_inches=0.2, bbox_inches="tight")
