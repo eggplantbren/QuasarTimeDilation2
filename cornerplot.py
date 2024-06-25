@@ -21,7 +21,7 @@ plt.savefig("cornerplot.png", dpi=450)
 #corner.corner(posterior_sample[:, [6, 4]],
 #                labels=["$\\beta_3$", "$n$"],
 #                plot_density=False, plot_contours=False, fontsize=14)
-#plt.savefig("cornerplot2.png")
+#plt.savefig("cornerplot2.png", dpi=450)
 
 
 ## For posterior histogram of beta3 when n is fixed to 1
