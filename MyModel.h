@@ -8,7 +8,7 @@ class MyModel
 {
     private:
         double beta1, beta2, beta12;
-        double C;
+        double beta0;
         double n;
 
         // Standard deviation of intrinsic scatter
