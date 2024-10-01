@@ -28,7 +28,7 @@ plt.savefig("cornerplot.png", dpi=450)
 #plt.hist(posterior_sample[:,-1], bins=20, alpha=0.5, edgecolor="black", linewidth=1.2)
 #plt.xlabel("$\\beta_3$")
 #plt.ylabel("Number of samples")
-#plt.axvline(0.0, linestyle="--", color="r", linewidth=3)
+##plt.axvline(0.0, linestyle="--", color="r", linewidth=3)
 #plt.savefig("beta3.pdf")
 
 
