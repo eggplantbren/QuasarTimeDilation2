@@ -39,7 +39,8 @@ plt.imshow(fmean, aspect="auto", extent=[lamb.min(), lamb.max(), lbol.min(), lbo
 plt.plot(lamb_data, lbol_data, "wo", markersize=7, alpha=0.3)
 plt.xlabel("$\\log_{10}(\\lambda/\\textnormal{\\AA})$")
 plt.ylabel("$\\log_{10}(L_{\\rm bol}/{\\rm (erg/s)})$")
-plt.colorbar()
+cbar = plt.colorbar()
+cbar.set_label("$\\log_{10}(\\tau/\\textrm{days})$")
 plt.savefig("surface.pdf", pad_inches=0.2, bbox_inches="tight")
 plt.show()
 
