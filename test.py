@@ -10,7 +10,7 @@ posterior_sample = np.loadtxt("posterior_sample.txt")
 
 #data[:,4] = data[:,4]# - np.log10(1 + data[:,0])
 
-plt.scatter(data[:,0], data[:,4], marker="o", alpha=0.5, c=data[:, 2])
+plt.scatter(data[:,0], data[:,4], marker="o", alpha=1, c=data[:, 2], cmap="coolwarm")
 plt.xlabel("$z$")
 plt.ylabel("$\\log_{10}(\\tau/{\\rm days})$")
 
