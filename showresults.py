@@ -10,7 +10,7 @@ plt.rcParams["font.family"] = "serif"
 plt.rcParams["font.size"] = 14
 plt.rc("text", usetex=True)
 
-C = posterior_sample[:,0]
+beta0 = posterior_sample[:,0]
 beta1 = posterior_sample[:,1]
 beta2 = posterior_sample[:,2]
 beta12 = posterior_sample[:,3]
@@ -25,14 +25,14 @@ lbol_data = data[:,1]
 lamb_data = data[:,2]
 
 ftot = np.zeros(lamb.shape)
-for i in range(len(C)):
-    f = C[i] + beta1[i]*(lamb - lamb_data.mean()) + beta2[i]*(lbol - lbol_data.mean()) \
+for i in range(len(beta0)):
+    f = beta0[i] + beta1[i]*(lamb - lamb_data.mean()) + beta2[i]*(lbol - lbol_data.mean()) \
                     + beta12[i]*(lamb - lamb_data.mean())*(lbol - lbol_data.mean())
 
     ftot += f
     print(i+1, flush=True)
 
-fmean = ftot/len(C)
+fmean = ftot/len(beta0)
 
 plt.imshow(fmean, aspect="auto", extent=[lamb.min(), lamb.max(), lbol.min(), lbol.max()],
             cmap="viridis", vmin=2.2, vmax=3.6)
@@ -56,7 +56,7 @@ plt.show()
 
 #plt.show()
 
-#f = C.mean() + beta1.mean()*(lamb - lamb_data.mean()) + beta2.mean()*(lbol - lbol_data.mean()) \
+#f = beta0.mean() + beta1.mean()*(lamb - lamb_data.mean()) + beta2.mean()*(lbol - lbol_data.mean()) \
 #                + beta12.mean()*(lamb - lamb_data.mean())*(lbol - lbol_data.mean())
 
 #print(lamb)
