@@ -23,16 +23,24 @@ Data::Data(const char* filename)
 
     fin.close();
 
+    fin.open("mbh.txt", std::ios::in);
+    while(fin >> a)
+        m_bh.push_back(a);
+    fin.close();
+
     // Compute summaries
     mean_lambda = 0.0;
     mean_l_bol = 0.0;
+    mean_m_bh = 0.0;
     for(size_t i=0; i<z.size(); ++i)
     {
         mean_lambda += lambda[i];
         mean_l_bol += l_bol[i];
+        mean_m_bh += m_bh[i];
     }
     mean_lambda /= z.size();
     mean_l_bol /= z.size();
+    mean_m_bh /= z.size();
 
     std::cout << "# Loaded " << z.size() << " data points." << std::endl;
 }
