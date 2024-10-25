@@ -11,4 +11,5 @@ significantly.
 * As you might expect, taking Lbol out of the model increases the marginal
 likelihood. We might be able to proceed with Mbh in and Lbol out.
 
-
+* With MBH replacing LBol, the marginal likelihood is better without the
+interaction term, and with the term, its value is basically consistent with zero.
