@@ -8,6 +8,7 @@ all the (log10) lbol values is 0.450.
 the marginal likelihood slightly. The inference about n is not affected
 significantly.
 
-
+* As you might expect, taking Lbol out of the model increases the marginal
+likelihood. We might be able to proceed with Mbh in and Lbol out.
 
 
