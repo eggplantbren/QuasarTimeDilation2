@@ -3,3 +3,5 @@
 * The uncertainties on the bolometric luminosities are very small.
 To quantify this, the mean errorbar is 0.018, but the standard deviation of
 all the (log10) lbol values is 0.450.
+
+* Including MBH in the explanatory variables makes Lbol irrelevant.
