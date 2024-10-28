@@ -7,7 +7,7 @@
 class MyModel
 {
     private:
-        double beta1, beta2, beta12, beta3;
+        double beta1, beta2, beta12, beta3, beta13, beta23;
         double beta0;
         double n;
 

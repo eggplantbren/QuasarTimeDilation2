@@ -12,7 +12,7 @@ void MyModel::from_prior(DNest4::RNG& rng)
 {
     beta1 = -10.0 + 20.0*rng.rand();
     beta2 = -10.0 + 20.0*rng.rand();
-    beta12 = -1.0 + 2.0*rng.rand();
+    beta12 = -10.0 + 20.0*rng.rand();
 
     beta0 = -10.0 + 20.0*rng.rand();
     n = -1.0 + 5.0*rng.rand();
@@ -22,12 +22,14 @@ void MyModel::from_prior(DNest4::RNG& rng)
         x = rng.randn();
 
     beta3 = -10.0 + 20.0*rng.rand();
+    beta13 = -10.0 + 20.0*rng.rand();
+    beta23 = -10.0 + 20.0*rng.rand();
 }
 
 double MyModel::perturb(DNest4::RNG& rng)
 {
     double logH = 0.0;
-    int which = rng.rand_int(8);
+    int which = rng.rand_int(10);
 
     if(which == 0)
     {
@@ -60,13 +62,23 @@ double MyModel::perturb(DNest4::RNG& rng)
     }
     else if(which == 6)
     {
-        beta12 += 2.0*rng.randh();
-        DNest4::wrap(beta12, -1.0, 1.0);
+        beta12 += 20.0*rng.randh();
+        DNest4::wrap(beta12, -10.0, 10.0);
     }
-    else
+    else if(which == 7)
     {
         beta3 += 20.0*rng.randh();
         DNest4::wrap(beta3, -10.0, 10.0);
+    }
+    else if(which == 8)
+    {
+        beta13 += 20.0*rng.randh();
+        DNest4::wrap(beta13, -10.0, 10.0);
+    }
+    else
+    {
+        beta23 += 20.0*rng.randh();
+        DNest4::wrap(beta23, -10.0, 10.0);
     }
 
 
@@ -84,6 +96,8 @@ double MyModel::log_likelihood() const
         double mu = beta0 + beta1*(data.lambda[i] - data.mean_lambda)
                         + beta2*(data.l_bol[i] - data.mean_l_bol)
                         + beta12*(data.lambda[i] - data.mean_lambda)*(data.l_bol[i] - data.mean_l_bol)
+                        + beta13*(data.lambda[i] - data.mean_lambda)*(data.m_bh[i] - data.mean_m_bh)
+                        + beta23*(data.l_bol[i] - data.mean_l_bol)*(data.m_bh[i] - data.mean_m_bh)
                         + beta3*(data.m_bh[i] - data.mean_m_bh)
                         + n*log10(1.0 + data.z[i]);
 
@@ -108,11 +122,11 @@ double MyModel::log_likelihood() const
 
 void MyModel::print(std::ostream& out) const
 {
-    out << beta0 << ' ' << beta1 << ' ' << beta2 << ' ' << beta12 << ' ' << n << ' ' << sigma << ' ' << beta3;
+    out << beta0 << ' ' << beta1 << ' ' << beta2 << ' ' << beta12 << ' ' << n << ' ' << sigma << ' ' << beta3 << ' ' << beta13 << ' ' << beta23;
 }
 
 std::string MyModel::description() const
 {
-    return std::string("beta0 beta1 beta2 beta12 n sigma beta3");
+    return std::string("beta0 beta1 beta2 beta12 n sigma beta3 beta13 beta23");
 }
 
