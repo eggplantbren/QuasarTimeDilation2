@@ -24,8 +24,11 @@ Data::Data(const char* filename)
     fin.close();
 
     fin.open("mbh.txt", std::ios::in);
-    while(fin >> a)
+    while(fin >> a && fin >> b)
+    {
         m_bh.push_back(a);
+        m_bh_err.push_back(b);
+    }
     fin.close();
 
     // Compute summaries

@@ -12,6 +12,7 @@ class Data
         std::vector<double> lambda;
         std::vector<double> l_bol;
         std::vector<double> m_bh;
+        std::vector<double> m_bh_err;
         std::vector<double> log10_tau_lower;
         std::vector<double> log10_tau_mid;
         std::vector<double> log10_tau_upper;
