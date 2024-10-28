@@ -4,12 +4,15 @@
 
 MyModel::MyModel()
 :ns(Data::instance.z.size())
+,m_bh_true(Data::instance.z.size()/3)
 {
 
 }
 
 void MyModel::from_prior(DNest4::RNG& rng)
 {
+    const Data& data = Data::instance;
+
     beta1 = -10.0 + 20.0*rng.rand();
     beta2 = -10.0 + 20.0*rng.rand();
     beta12 = -10.0 + 20.0*rng.rand();
@@ -24,12 +27,18 @@ void MyModel::from_prior(DNest4::RNG& rng)
     beta3 = -10.0 + 20.0*rng.rand();
     beta13 = -10.0 + 20.0*rng.rand();
     beta23 = -10.0 + 20.0*rng.rand();
+
+    // This is not exactly correct but perturb() will equilibrate it
+    // correctly
+    for(size_t i=0; i<m_bh_true.size(); ++i)
+        m_bh_true[i] = data.m_bh[i] + data.m_bh_err[i]*rng.randn();
 }
 
 double MyModel::perturb(DNest4::RNG& rng)
 {
     double logH = 0.0;
-    int which = rng.rand_int(10);
+    int which = rng.rand_int(11);
+    const Data& data = Data::instance;
 
     if(which == 0)
     {
@@ -75,12 +84,18 @@ double MyModel::perturb(DNest4::RNG& rng)
         beta13 += 20.0*rng.randh();
         DNest4::wrap(beta13, -10.0, 10.0);
     }
-    else
+    else if(which == 9)
     {
         beta23 += 20.0*rng.randh();
         DNest4::wrap(beta23, -10.0, 10.0);
     }
-
+    else
+    {
+        int k = rng.rand_int(m_bh_true.size());
+        logH -= -0.5*pow((data.m_bh[k] - mu_m_bh_true)/sigma_m_bh_true, 2);
+        m_bh_true[k] = data.m_bh[k] + data.m_bh_err[k]*rng.randn();
+        logH += -0.5*pow((data.m_bh[k] - mu_m_bh_true)/sigma_m_bh_true, 2);
+    }
 
     return logH;
 }
@@ -95,10 +110,10 @@ double MyModel::log_likelihood() const
         // Prediction made by the regression surface
         double mu = beta0 + beta1*(data.lambda[i] - data.mean_lambda)
                         + beta2*(data.l_bol[i] - data.mean_l_bol)
-                        + beta12*(data.lambda[i] - data.mean_lambda)*(data.l_bol[i] - data.mean_l_bol)
-                        + beta13*(data.lambda[i] - data.mean_lambda)*(data.m_bh[i] - data.mean_m_bh)
-                        + beta23*(data.l_bol[i] - data.mean_l_bol)*(data.m_bh[i] - data.mean_m_bh)
-                        + beta3*(data.m_bh[i] - data.mean_m_bh)
+//                        + beta12*(data.lambda[i] - data.mean_lambda)*(data.l_bol[i] - data.mean_l_bol)
+//                        + beta13*(data.lambda[i] - data.mean_lambda)*(m_bh_true[i/3] - data.mean_m_bh)
+//                        + beta23*(data.l_bol[i] - data.mean_l_bol)*(m_bh_true[i/3] - data.mean_m_bh)
+                        + beta3*(m_bh_true[i/3] - data.mean_m_bh)
                         + n*log10(1.0 + data.z[i]);
 
         // Add intrinsic scatter

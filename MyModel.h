@@ -7,6 +7,9 @@
 class MyModel
 {
     private:
+        static constexpr double mu_m_bh_true = 8.92;
+        static constexpr double sigma_m_bh_true = 0.40;
+
         double beta1, beta2, beta12, beta3, beta13, beta23;
         double beta0;
         double n;
@@ -14,6 +17,8 @@ class MyModel
         // Standard deviation of intrinsic scatter
         double sigma;
         std::vector<double> ns; // Intrinsic scatter per-object parameters
+
+        std::vector<double> m_bh_true;
 
     public:
         // Constructor only gives size of params
