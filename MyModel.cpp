@@ -2,6 +2,8 @@
 #include "DNest4/code/DNest4.h"
 #include "Data.h"
 
+#include <iomanip>
+
 MyModel::MyModel()
 :ns(Data::instance.z.size())
 ,m_bh_true(Data::instance.z.size()/3)
@@ -37,7 +39,7 @@ void MyModel::from_prior(DNest4::RNG& rng)
 double MyModel::perturb(DNest4::RNG& rng)
 {
     double logH = 0.0;
-    int which = rng.rand_int(11);
+    int which = rng.rand_int(10);
     const Data& data = Data::instance;
 
     if(which == 0)
@@ -84,18 +86,17 @@ double MyModel::perturb(DNest4::RNG& rng)
         beta13 += 20.0*rng.randh();
         DNest4::wrap(beta13, -10.0, 10.0);
     }
-    else if(which == 9)
+    else
     {
         beta23 += 20.0*rng.randh();
         DNest4::wrap(beta23, -10.0, 10.0);
     }
-    else
-    {
-        int k = rng.rand_int(m_bh_true.size());
-        logH -= -0.5*pow((data.m_bh[k] - mu_m_bh_true)/sigma_m_bh_true, 2);
-        m_bh_true[k] = data.m_bh[k] + data.m_bh_err[k]*rng.randn();
-        logH += -0.5*pow((data.m_bh[k] - mu_m_bh_true)/sigma_m_bh_true, 2);
-    }
+
+    // Do this once every iteration
+    int k = rng.rand_int(m_bh_true.size());
+    logH -= -0.5*pow((m_bh_true[k] - mu_m_bh_true)/sigma_m_bh_true, 2);
+    m_bh_true[k] = data.m_bh[k] + data.m_bh_err[k]*rng.randn();
+    logH += -0.5*pow((m_bh_true[k] - mu_m_bh_true)/sigma_m_bh_true, 2);
 
     return logH;
 }
@@ -137,6 +138,7 @@ double MyModel::log_likelihood() const
 
 void MyModel::print(std::ostream& out) const
 {
+    out << std::setprecision(10);
     out << beta0 << ' ' << beta1 << ' ' << beta2 << ' ' << beta12 << ' ' << n << ' ' << sigma << ' ' << beta3 << ' ' << beta13 << ' ' << beta23;
 }
 
