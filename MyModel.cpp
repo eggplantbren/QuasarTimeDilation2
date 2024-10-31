@@ -83,7 +83,8 @@ double MyModel::log_likelihood() const
         mu += sigma*ns[i/3];
 
         // Gaussian likelihood for simulated data with symmetric errorbars
-//        double sigma = data.log10_tau_mid[i] - data.log10_tau_lower[i];
+//        double sigma = sqrt((data.log10_tau_mid[i] - data.log10_tau_lower[i])*
+//                            (data.log10_tau_upper[i] - data.log10_tau_mid[i]));
 //        logL += -0.5*log(2*M_PI) - log(sigma)
 //                    - 0.5*pow((data.log10_tau_mid[i] - mu)/sigma, 2);
 
