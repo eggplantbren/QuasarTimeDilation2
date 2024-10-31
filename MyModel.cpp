@@ -88,6 +88,15 @@ double MyModel::log_likelihood() const
 //        logL += -0.5*log(2*M_PI) - log(sigma)
 //                    - 0.5*pow((data.log10_tau_mid[i] - mu)/sigma, 2);
 
+//        // Two-sided gaussian
+//        double sigma;
+//        if(mu < data.log10_tau_mid[i])
+//            sigma = data.log10_tau_mid[i] - data.log10_tau_lower[i];
+//        else
+//            sigma = data.log10_tau_upper[i] - data.log10_tau_mid[i];
+//        logL += -0.5*log(2*M_PI) - log(sigma)
+//                    - 0.5*pow((data.log10_tau_mid[i] - mu)/sigma, 2);
+
         double beta_l = (data.log10_tau_mid[i] - data.log10_tau_lower[i])/1.1394;
         double beta_r = (data.log10_tau_upper[i] - data.log10_tau_mid[i])/1.1394;
         if(mu < data.log10_tau_mid[i])
