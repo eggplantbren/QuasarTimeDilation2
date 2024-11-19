@@ -16,6 +16,7 @@ class Data
         std::vector<double> log10_tau_upper;
 
         // Summaries of explanatory variables
+        double mean_zz; // Where zz = log10(1+z)
         double mean_lambda;
         double mean_l_bol;
 

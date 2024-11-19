@@ -14,6 +14,7 @@ beta0 = posterior_sample[:,0]
 beta1 = posterior_sample[:,1]
 beta2 = posterior_sample[:,2]
 beta12 = posterior_sample[:,3]
+n = posterior_sample[:,4]
 
 lamb = np.linspace(np.log10(800), np.log10(7000), 1001)
 lbol = np.linspace(44.8, 47.2, 1001)
@@ -21,13 +22,15 @@ lamb, lbol = np.meshgrid(lamb, lbol)
 lbol = lbol[::-1, :]
 
 data = np.loadtxt("data.txt")
+z_data = data[:,0]
 lbol_data = data[:,1]
 lamb_data = data[:,2]
 
 ftot = np.zeros(lamb.shape)
 for i in range(len(beta0)):
     f = beta0[i] + beta1[i]*(lamb - lamb_data.mean()) + beta2[i]*(lbol - lbol_data.mean()) \
-                    + beta12[i]*(lamb - lamb_data.mean())*(lbol - lbol_data.mean())
+                    + beta12[i]*(lamb - lamb_data.mean())*(lbol - lbol_data.mean()) \
+                    + n[i]*(np.log10(1.0 + 0) - np.mean(np.log10(1.0 + z_data)))
 
     ftot += f
     print(i+1, flush=True)

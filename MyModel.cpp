@@ -77,7 +77,7 @@ double MyModel::log_likelihood() const
         double mu = beta0 + beta1*(data.lambda[i] - data.mean_lambda)
                         + beta2*(data.l_bol[i] - data.mean_l_bol)
                         + beta12*(data.lambda[i] - data.mean_lambda)*(data.l_bol[i] - data.mean_l_bol)
-                        + n*log10(1.0 + data.z[i]);
+                        + n*(log10(1.0 + data.z[i]) - data.mean_zz);
 
         // Add intrinsic scatter
         mu += sigma*ns[i/3];

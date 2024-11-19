@@ -10,11 +10,11 @@ plt.rc("text", usetex=True)
 
 posterior_sample = np.loadtxt("posterior_sample.txt")
 
-#corner.corner(posterior_sample,
-#    labels=["$\\beta_0$", "$\\beta_1$", "$\\beta_2$",
-#               "$\\beta_{12}$", "$n$", "$\\sigma$"], plot_contours=False,
-#        plot_density=False, fontsize=14)
-#plt.savefig("cornerplot.png", dpi=450)
+corner.corner(posterior_sample,
+    labels=["$\\beta_0$", "$\\beta_1$", "$\\beta_2$",
+               "$\\beta_{12}$", "$n$", "$\\sigma$"], plot_contours=False,
+        plot_density=False, fontsize=14)
+plt.savefig("cornerplot.png", dpi=450)
 
 
 ## For small cornerplot with only beta3 and n
