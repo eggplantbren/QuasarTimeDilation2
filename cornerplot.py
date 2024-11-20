@@ -10,12 +10,12 @@ plt.rcParams.update(plt.rcParamsDefault)
 # Set up fonts
 plt.rcParams["font.family"] = "serif"
 plt.rcParams["font.size"] = 14
-plt.rcParams["lines.markersize"] = 10
 ##plt.rc("text", usetex=True)
 
-ndim = 6
+
 
 posterior_sample = np.loadtxt("posterior_sample.txt")
+ndim = 6
 
 figure = corner.corner(posterior_sample,
     labels=["$\\beta_0$", "$\\beta_1$", "$\\beta_2$",
@@ -32,10 +32,19 @@ for i in range(ndim):
 plt.savefig("cornerplot.png", dpi=450)
 
 
-## For small cornerplot with only beta3 and n
-#corner.corner(posterior_sample[:, [6, 4]],
-#                labels=["$\\beta_3$", "$n$"],
-#                plot_density=False, plot_contours=False, fontsize=14)
+# For small cornerplot with only beta3 and n
+#ndim = 2
+#figure = corner.corner(posterior_sample[:, [6, 4]],
+#    labels=["$\\beta_3$", "$n$"], plot_contours=False,
+#        plot_density=False, fontsize=14 , hist_kwargs={"color":"blue", "alpha":0.3, "histtype":"stepfilled", "edgecolor":"black","lw":"3"} )
+
+#axes = np.array(figure.axes).reshape((ndim, ndim))
+
+#for i in range(ndim):
+#	
+#	ax = axes[i,i]
+#	print( ax )
+
 #plt.savefig("cornerplot2.png", dpi=450)
 
 
