@@ -1,19 +1,34 @@
+#%%
 # Corner plot
 import corner
 import matplotlib.pyplot as plt
 import numpy as np
 
+plt.rcParams.update(plt.rcParamsDefault)
+
+
 # Set up fonts
 plt.rcParams["font.family"] = "serif"
 plt.rcParams["font.size"] = 14
-plt.rc("text", usetex=True)
+plt.rcParams["lines.markersize"] = 10
+##plt.rc("text", usetex=True)
+
+ndim = 6
 
 posterior_sample = np.loadtxt("posterior_sample.txt")
 
-corner.corner(posterior_sample,
+figure = corner.corner(posterior_sample,
     labels=["$\\beta_0$", "$\\beta_1$", "$\\beta_2$",
                "$\\beta_{12}$", "$n$", "$\\sigma$"], plot_contours=False,
-        plot_density=False, fontsize=14)
+        plot_density=False, fontsize=14 , hist_kwargs={"color":"blue", "alpha":0.3, "histtype":"stepfilled", "edgecolor":"black","lw":"3"} )
+
+axes = np.array(figure.axes).reshape((ndim, ndim))
+
+for i in range(ndim):
+	
+	ax = axes[i,i]
+	print( ax )
+
 plt.savefig("cornerplot.png", dpi=450)
 
 
@@ -58,3 +73,5 @@ plt.savefig("cornerplot.png", dpi=450)
 #plt.savefig("beta3.pdf")
 #plt.savefig("beta3.png")
 
+
+# %%
