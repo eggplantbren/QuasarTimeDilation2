@@ -1,6 +1,7 @@
 #include "Data.h"
 #include <fstream>
 #include <iostream>
+#include <cmath>
 
 Data Data::instance("data.txt");
 
@@ -23,27 +24,19 @@ Data::Data(const char* filename)
 
     fin.close();
 
-    fin.open("mbh.txt", std::ios::in);
-    while(fin >> a && fin >> b)
-    {
-        m_bh.push_back(a);
-        m_bh_err.push_back(b);
-    }
-    fin.close();
-
     // Compute summaries
+    mean_zz = 0.0;
     mean_lambda = 0.0;
     mean_l_bol = 0.0;
-    mean_m_bh = 0.0;
     for(size_t i=0; i<z.size(); ++i)
     {
+        mean_zz += log10(1.0 + z[i]);
         mean_lambda += lambda[i];
         mean_l_bol += l_bol[i];
-        mean_m_bh += m_bh[i];
     }
+    mean_zz /= z.size();
     mean_lambda /= z.size();
     mean_l_bol /= z.size();
-    mean_m_bh /= z.size();
 
     std::cout << "# Loaded " << z.size() << " data points." << std::endl;
 }
